@@ -61,6 +61,7 @@ public class TinderTutorMain extends Application {
             txtUsername.setMaxWidth(340);
             txtPassword.setMaxWidth(340);
             Label forgotPass = new Label("Forgot Your password ?");
+            btnLogin.setStyle("-fx-background-radius: 20px; -fx-padding: 4 65; -fx-background-color: #ef5350; -fx-text-fill: white; -fx-font-weight: bold");
             tinderTutorLogin.LoginView(image, lblSignIn, txtUsername, txtPassword, forgotPass, btnLogin).setMargin(lblSignIn , new Insets(-40 ,0 ,0,0));
             scene2 = new Scene(tinderTutorLogin.LoginView(image, lblSignIn, txtUsername, txtPassword, forgotPass, btnLogin) , 600 ,700);
             window.setScene(scene2);
