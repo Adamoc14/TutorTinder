@@ -8,7 +8,9 @@ package tindertutor;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,14 +18,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 /**
@@ -38,8 +38,10 @@ public class TinderTutorMain extends Application {
     }
     
     Stage window;
-    Scene scene2;
-    Scene scene1;
+    Scene SwipePage;
+    Scene LoginRealPage;
+    Scene SignUpPage;
+    Scene SettingsPage;
     
     @Override
     public void start(Stage primaryStage) {
@@ -63,6 +65,32 @@ public class TinderTutorMain extends Application {
         btnFacebook.setStyle("-fx-background-color: transparent");
         btnGooglePlus.setStyle("-fx-background-color: transparent");
         
+        btnSignUp.setOnAction(e-> {
+            TinderTutorSignUp tindertutorSignUp = new TinderTutorSignUp();
+            ImageView logoView = new ImageView(new Image(getClass().getResourceAsStream("Assets/TinderTutorLogo.png"),220,220,true,true));
+            Label lblSignUp = new Label("Sign Up");
+            lblSignUp.setTextFill(Color.RED);
+            lblSignUp.setStyle("-fx-font-size: 30;");
+            Label lblUserType = new Label("Are you a ");
+            Button btnStudent = new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnStudents.png"),280,280,true,true)));
+            Button btnTeacher = new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnTeacher.png"),280,280,true,true)));
+            btnStudent.setStyle("-fx-background-color: transparent");
+            btnTeacher.setStyle("-fx-background-color: transparent");
+            Label lblStudent = new Label("Student ?");
+            lblStudent.setStyle("fx-font-weight: bolder; fx-text-fill: black; ");
+            Label lblTeacher = new Label("Teacher ?");
+            
+            btnStudent.setOnAction(event-> {
+                System.out.println("Well");
+            });
+            btnTeacher.setOnAction(evnt -> {
+                System.out.println("Boi");
+            });
+            
+            SignUpPage = new Scene(tindertutorSignUp.SignUpView(logoView,lblSignUp , lblUserType, btnStudent, btnTeacher,  lblStudent , lblTeacher), 600 ,700);
+            window.setScene(SignUpPage);
+        });
+        
         //Adding all Button functionality in lambda expressions
         btnLogin.setOnAction(e -> {
             TinderTutorLogin tinderTutorLogin = new TinderTutorLogin();
@@ -76,8 +104,8 @@ public class TinderTutorMain extends Application {
             Button btnLoginReal = new Button("Login");
             btnLoginReal.setStyle("-fx-background-radius: 20px; -fx-padding: 4 65; -fx-background-color: #ef5350; -fx-text-fill: white; -fx-font-weight: bold");
             tinderTutorLogin.LoginView(image, lblSignIn, txtUsername, txtPassword, forgotPass, btnLoginReal).setMargin(lblSignIn , new Insets(-40 ,0 ,0,0));
-            scene2 = new Scene(tinderTutorLogin.LoginView(image, lblSignIn, txtUsername, txtPassword, forgotPass, btnLoginReal) , 600 ,700);
-            window.setScene(scene2);
+            LoginRealPage = new Scene(tinderTutorLogin.LoginView(image, lblSignIn, txtUsername, txtPassword, forgotPass, btnLoginReal) , 600 ,700);
+            window.setScene(LoginRealPage);
         
             btnLoginReal.setOnAction(event -> {
                     if(txtUsername.getText().equals("Adam")&& txtPassword.getText().equals("1234")){
@@ -88,20 +116,40 @@ public class TinderTutorMain extends Application {
                         ImageView logoView = new ImageView(new Image(getClass().getResourceAsStream("Assets/TinderTutorLogo.png"),280,120,true,true));
                         Button btnChat= new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnChat.png"),80,80,true,true)));
                         btnChat.setStyle("-fx-background-color: transparent;");
-                        ImageView mainPicView = new ImageView(new Image(getClass().getResourceAsStream("Assets/MainTestProfilePic.jpg"),280,280,true,true));
-                        mainPicView.setStyle("-fx-background-radius: 50; -fx-background-color: red;");
+                        Image mainImage = new Image(getClass().getResourceAsStream("Assets/MainTestProfilePic.jpg"),280,280,true,true);
+                        Circle mainPicView = new Circle(500,500,150);
+                        mainPicView.setFill(new ImagePattern(mainImage));
                         Label lblUsers_Name= new Label("Username : ");
                         Label lblUsers_Qualification= new Label("Qualification: ");
                         Label lblUsers_Subject= new Label("Subject: ");
                         Label lblUsers_Location= new Label("Location: ");
                         Label lblUsers_Price= new Label("Price: ");
-                        ImageView FormattingView = new ImageView(new Image(getClass().getResourceAsStream("Assets/FormattingMain.png"),400,200,false,true));
-                        Button btnCheckYes= new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnYes.png"),60,50,true,true)));
-                        Button btnCheckNo = new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnNo.png"),60,50,true,true)));
+                        Button btnCheckYes= new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnYes.png"),60,30,true,true)));
+                        Button btnCheckNo = new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnNo.png"),60,30,true,true)));
                         btnCheckYes.setStyle("-fx-background-color: transparent;");
+                        Group grpBtns = new Group(btnCheckNo , btnCheckYes);
+                        btnCheckYes.toFront();
                         btnCheckNo.setStyle("-fx-background-color: transparent;");
-                        scene1 = new Scene(tinderTutorSwipe.SwipeView(btnSettings, logoView, btnChat, mainPicView, lblUsers_Name, lblUsers_Qualification, lblUsers_Subject, lblUsers_Location, lblUsers_Price, FormattingView , btnCheckYes, btnCheckNo) , 600 , 700);
-                        window.setScene(scene1);
+                        ImageView FormattingView = new ImageView(new Image(getClass().getResourceAsStream("Assets/FormattingMain.png"),250,150,false,true));
+                        SwipePage = new Scene(tinderTutorSwipe.SwipeView(btnSettings, logoView, btnChat, mainPicView, lblUsers_Name, lblUsers_Qualification, lblUsers_Subject, lblUsers_Location, lblUsers_Price, grpBtns , FormattingView) , 600 , 700);
+                        window.setScene(SwipePage);
+                        
+                        btnSettings.setOnAction(evt-> {
+                            TinderTutorSettings tinderTutorSettings = new TinderTutorSettings();
+                            ImageView settingsView = new ImageView(new Image(getClass().getResourceAsStream("Assets/btnSettings.png"),80,80,false,true));
+                            ImageView formatView = new ImageView(new Image(getClass().getResourceAsStream("Assets/MainFormatting.png"),650,150,false,true));
+                            Image mainImagePic = new Image(getClass().getResourceAsStream("Assets/MainTestProfilePic.jpg"),280,280,true,true);
+                            Circle userPicView = new Circle(500,500,150);
+                            userPicView.setFill(new ImagePattern(mainImagePic));
+                            Label lblUserName = new Label("John Barton , New England");
+                            Label lblUserType = new Label("Student");
+                            Label lblUniName = new Label("Stanford");
+                            Button btnUserProfile = new Button("My Profile");
+                            btnUserProfile.setStyle("-fx-background-radius: 20px; -fx-padding: 4 65; -fx-background-color: #ef5350; -fx-text-fill: white; -fx-font-weight: bold");
+                            ImageView logoPlusView = new ImageView(new Image(getClass().getResourceAsStream("Assets/TinderTutorLogoPlus.png"),150,100,false,true));
+                            SettingsPage = new Scene(tinderTutorSettings.SettingsView(settingsView, formatView ,userPicView , lblUserName ,lblUserType ,lblUniName, btnUserProfile ,logoPlusView), 600, 700);
+                            window.setScene(SettingsPage);
+                        });
 
                     } else {
                         Alert helpAlert = new Alert(Alert.AlertType.WARNING,  "Please enter correct login details");
@@ -135,6 +183,8 @@ public class TinderTutorMain extends Application {
         
         //Setting up the stage
         primaryStage.setTitle("Tutor Tinder");
+        Image tutorTinderIcon = new Image(getClass().getResourceAsStream("Assets/TinderTutorLogo.png"),280,120,true,true);
+        primaryStage.getIcons().add(tutorTinderIcon);
         primaryStage.setScene(scene);
         primaryStage.show();
 
