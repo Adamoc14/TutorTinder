@@ -134,6 +134,14 @@ public class TinderTutorMain extends Application {
                         SwipePage = new Scene(tinderTutorSwipe.SwipeView(btnSettings, logoView, btnChat, mainPicView, lblUsers_Name, lblUsers_Qualification, lblUsers_Subject, lblUsers_Location, lblUsers_Price, grpBtns , FormattingView) , 600 , 700);
                         window.setScene(SwipePage);
                         
+                        btnChat.setOnAction(event2 -> {
+                            
+                            
+                            
+                            
+                            
+                        });
+                        
                         btnSettings.setOnAction(evt-> {
                             TinderTutorSettings tinderTutorSettings = new TinderTutorSettings();
                             ImageView settingsView = new ImageView(new Image(getClass().getResourceAsStream("Assets/btnSettings.png"),80,80,false,true));
