@@ -38,7 +38,7 @@ public class TinderTutorSignUp {
         
         
         
-        
+        layout.setStyle("-fx-background-color: #ffffff");
         return layout;
 
     }

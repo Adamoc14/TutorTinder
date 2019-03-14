@@ -87,7 +87,7 @@ public class TinderTutorSignUpTutor {
         VBox layout = new VBox(20 ,topLogoView , topViewLabel ,topUserImageView,topFirstView, topSecondView , topThirdView , middleFirstView ,middleSecondView, middleThirdView, middleFourthView, middleFifthView , middleSixthView , middleLastView );
         
         
-        
+        layout.setStyle("-fx-background-color: #ffffff");
         
         return layout;
 

@@ -38,7 +38,7 @@ public class TinderTutorSettings {
         VBox layout = new VBox(20 ,topView , middleView , bottomView);
         
         
-        
+        layout.setStyle("-fx-background-color: #ffffff");
         
         return layout;
 

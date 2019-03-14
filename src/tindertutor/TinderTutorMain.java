@@ -5,7 +5,6 @@
  */
 package tindertutor;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -53,6 +52,8 @@ public class TinderTutorMain extends Application {
     Scene SignUpPage;
     Scene SignUpStudentPage;
     Scene SettingsPage;
+    Scene GrindRecieved;
+    Scene WaitScreen;
     
     @Override
     public void start(Stage primaryStage) {
@@ -94,6 +95,7 @@ public class TinderTutorMain extends Application {
             btnStudent.setOnAction(event-> {
                 TinderTutorSignUpStudent tindertutorSignUpStudent = new TinderTutorSignUpStudent();
                 
+   
                 ImageView logoView2 = new ImageView(new Image(getClass().getResourceAsStream("Assets/TinderTutorLogo.png"),120,120,true,true));
                 
                 Label lblStudentProf = new Label("Student Profile");
@@ -294,26 +296,56 @@ public class TinderTutorMain extends Application {
             window.setScene(LoginRealPage);
             btnLoginReal.setOnAction(event -> {
                     if(txtUsername.getText().equals("Adam")&& txtPassword.getText().equals("1234")){
-
-                        TinderTutorMainSwipe tinderTutorSwipe = new TinderTutorMainSwipe();
-                        Button btnSettings = new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnSettings.png"),80,80,true,true)));
-                        btnSettings.setStyle("-fx-background-color: transparent;");
-                        ImageView logoView = new ImageView(new Image(getClass().getResourceAsStream("Assets/TinderTutorLogo.png"),280,120,true,true));
-                        Button btnChat= new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnChat.png"),80,80,true,true)));
-                        btnChat.setStyle("-fx-background-color: transparent;");
-                        Image mainImage = new Image(getClass().getResourceAsStream("Assets/MainTestProfilePic.jpg"),280,280,true,true);
-                        Circle mainPicView = new Circle(500,500,150);
-                        mainPicView.setFill(new ImagePattern(mainImage));
-                        Label lblUsers_Name= new Label("Username : ");
-                        Label lblUsers_Qualification= new Label("Qualification: ");
-                        Label lblUsers_Subject= new Label("Subject: ");
-                        Label lblUsers_Location= new Label("Location: ");
-                        Label lblUsers_Price= new Label("Price: ");
-                        Button btnCheckYes= new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnYes.png"),60,30,true,true)));
-                        Button btnCheckNo = new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnNo.png"),60,30,true,true)));
-                        btnCheckYes.setStyle("-fx-background-color: transparent;");
-                        Group grpBtns = new Group(btnCheckNo , btnCheckYes);
-                        btnCheckYes.toFront();
+                        
+                        
+                        TinderTutorWaitScreen tinderTutorWaitScreen = new TinderTutorWaitScreen();
+                        Label lblTitle = new Label("Tinder Tutor");
+                        lblTitle.setStyle("-fx-font-size : 30; -fx-text-fill :#ef5350 ");
+                        ImageView tinderTutorSplashscreen = new ImageView(new Image(getClass().getResourceAsStream("Assets/tinderTutorSplashscreen.png"),280,280,true,true));
+                        tinderTutorSplashscreen.setStyle("-fx-background-color: transparent");
+                        Label lblTagLine = new Label("Where students and tutors worlds collide!");
+                        lblTagLine.setStyle("-fx-font-size: 20;");
+                        Button btnContinue = new Button("Continue");
+                        WaitScreen = new Scene(tinderTutorWaitScreen.WaitScreenView(lblTitle, tinderTutorSplashscreen, lblTagLine, btnContinue), 600 , 700);
+                        window.setScene(WaitScreen);
+                        
+                        btnContinue.setOnAction(t-> {
+                            TinderTutorMainSwipe tinderTutorSwipe = new TinderTutorMainSwipe();
+                            Button btnSettings = new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnSettings.png"),80,80,true,true)));
+                            btnSettings.setStyle("-fx-background-color: transparent;");
+                            ImageView logoView = new ImageView(new Image(getClass().getResourceAsStream("Assets/TinderTutorLogo.png"),280,120,true,true));
+                            Button btnChat= new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnChat.png"),80,80,true,true)));
+                            btnChat.setStyle("-fx-background-color: transparent;");
+                            Image mainImage = new Image(getClass().getResourceAsStream("Assets/MainTestProfilePic.jpg"),280,280,true,true);
+                            Circle mainPicView = new Circle(500,500,150);
+                            mainPicView.setFill(new ImagePattern(mainImage));
+                            Label lblUsers_Name= new Label("Username : ");
+                            Label lblUsers_Qualification= new Label("Qualification: ");
+                            Label lblUsers_Subject= new Label("Subject: ");
+                            Label lblUsers_Location= new Label("Location: ");
+                            Label lblUsers_Price= new Label("Price: ");
+                            Button btnCheckYes= new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnYes.png"),60,30,true,true)));
+                            Button btnCheckNo = new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnNo.png"),60,30,true,true)));
+                            btnCheckYes.setStyle("-fx-background-color: transparent;");
+                            Group grpBtns = new Group(btnCheckNo , btnCheckYes);
+                            btnCheckYes.toFront();
+                        
+                        btnCheckYes.setOnAction(r-> {
+                            TinderTutorGrindRecieved tinderTutorRecieved = new TinderTutorGrindRecieved();
+                            ImageView logoView3 = new ImageView(new Image(getClass().getResourceAsStream("Assets/TinderTutorLogo.png"),280,120,true,true));
+                            ImageView picGrindRecieved = new ImageView(new Image(getClass().getResourceAsStream("Assets/PicGrindRecieved.png"),280,120,true,true));
+                            Image mainImage2 = new Image(getClass().getResourceAsStream("Assets/MainTestProfilePic.jpg"),280,280,true,true);
+                            Circle TutorPicView = new Circle(250,250,80);
+                            TutorPicView.setFill(new ImagePattern(mainImage2));
+                            Image mainImage3 = new Image(getClass().getResourceAsStream("Assets/MainTestProfilePic.jpg"),280,280,true,true);
+                            Circle StudentPicView  = new Circle(250,250,80);
+                            StudentPicView.setFill(new ImagePattern(mainImage3));
+                            Label lblGrindRecievedConfirmation = new Label("This tutor is available for a grind with you !");
+                            lblGrindRecievedConfirmation.setStyle("-fx-font-size : 20;");
+                            Button btnMessageUser = new Button("Message...");
+                            GrindRecieved = new Scene(tinderTutorRecieved.GrindRecievedView(logoView3, picGrindRecieved, StudentPicView, TutorPicView, lblGrindRecievedConfirmation, btnMessageUser), 600 ,700);
+                            window.setScene(GrindRecieved);
+                        });
                         btnCheckNo.setStyle("-fx-background-color: transparent;");
                         ImageView FormattingView = new ImageView(new Image(getClass().getResourceAsStream("Assets/FormattingMain.png"),250,150,false,true));
                         SwipePage = new Scene(tinderTutorSwipe.SwipeView(btnSettings, logoView, btnChat, mainPicView, lblUsers_Name, lblUsers_Qualification, lblUsers_Subject, lblUsers_Location, lblUsers_Price, grpBtns , FormattingView) , 600 , 700);
@@ -405,6 +437,10 @@ public class TinderTutorMain extends Application {
                             window.setScene(SettingsPage);
                         });
 
+                            
+                        });
+
+                        
                     } else {
                         Alert helpAlert = new Alert(Alert.AlertType.WARNING,  "Please enter correct login details");
                         helpAlert.setTitle("Error");
