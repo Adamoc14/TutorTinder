@@ -23,15 +23,15 @@ import javafx.scene.shape.Circle;
  *
  * @author adamoc
  */
-public class TinderTutorSignUpStudent {
-     public VBox SignUpStudentView( ImageView logoView2 , Label lblStudentProf , Circle mainPicView , Label lblUsers_Name , TextField txtUsers_Name , Label lblUsers_Email , TextField txtUsers_Email , Label lblUsers_Pass , PasswordField txtUsers_Pass , ImageView loginDetails , Label lblUsers_Year ,  TextField txtUsers_Year , Label lblUsers_Course , TextField txtUsers_Course , Label lblUsers_Module , TextField txtUsers_Module ,Label lblLocationSlider, Slider locationSlider , Label lblUsers_PreferredPrice , ComboBox priceComboBox , Label lblUsers_Type , RadioButton button1 , RadioButton button2 ,  Button btnSignUpReal ){
+public class TinderTutorSignUpTutor {
+     public VBox SignUpTutorView( ImageView logoView2 , Label lblTutorProf , Circle mainPicView , Label lblUsers_Name , TextField txtUsers_Name , Label lblUsers_Email , TextField txtUsers_Email , Label lblUsers_Pass , PasswordField txtUsers_Pass , ImageView loginDetails , Label lblUsers_RLinks ,  TextField txtUsers_RLinks , Label lblUsers_Qualifications , TextField txtUsers_Qualifications , Label lblUsers_Description , TextField txtUsers_Description ,Label lblLocationSlider, Slider locationSlider , Label lblUsers_PreferredPrice , ComboBox priceComboBox , Label lblUsers_Type , RadioButton button1 , RadioButton button2 ,  Button btnSignUpReal ){
         
         HBox topLogoView = new HBox(logoView2); 
         topLogoView.setAlignment(Pos.TOP_RIGHT);
 
-        HBox topViewLabel = new HBox(lblStudentProf);
+        HBox topViewLabel = new HBox(lblTutorProf);
         topViewLabel.setAlignment(Pos.TOP_CENTER);
-        topViewLabel.setMargin(lblStudentProf ,new Insets(-40,0,0,0));
+        topViewLabel.setMargin(lblTutorProf ,new Insets(-40,0,0,0));
         
         HBox topUserImageView = new HBox(mainPicView , lblUsers_Name , txtUsers_Name);
         topUserImageView.setAlignment(Pos.CENTER_LEFT);
@@ -53,18 +53,18 @@ public class TinderTutorSignUpStudent {
         HBox topThirdView = new HBox(loginDetails);
         topThirdView.setAlignment(Pos.CENTER);
         
-        HBox middleFirstView = new HBox(lblUsers_Year,txtUsers_Year );
-        topSecondView.setMargin(lblUsers_Year, new Insets(0,18,0,10));
-        topSecondView.setMargin(txtUsers_Year, new Insets(0,20,0,5));
+        HBox middleFirstView = new HBox(lblUsers_RLinks,txtUsers_RLinks );
+        topSecondView.setMargin(lblUsers_RLinks, new Insets(0,18,0,10));
+        topSecondView.setMargin(txtUsers_RLinks, new Insets(0,20,0,5));
         middleFirstView.setAlignment(Pos.CENTER);
         
-        HBox middleSecondView = new HBox(lblUsers_Course , txtUsers_Course);
-        middleSecondView.setMargin(lblUsers_Course, new Insets(0,18,0,-10));
-        middleSecondView.setMargin(txtUsers_Course, new Insets(0,20,0,10));
+        HBox middleSecondView = new HBox(lblUsers_Qualifications , txtUsers_Qualifications);
+        middleSecondView.setMargin(lblUsers_Qualifications, new Insets(0,18,0,-10));
+        middleSecondView.setMargin(txtUsers_Qualifications, new Insets(0,20,0,10));
         middleSecondView.setAlignment(Pos.CENTER);
         
-        HBox middleThirdView = new HBox(lblUsers_Module , txtUsers_Module );
-        middleThirdView.setMargin(lblUsers_Module, new Insets(0,18,0,-20));
+        HBox middleThirdView = new HBox(lblUsers_Description , txtUsers_Description );
+        middleThirdView.setMargin(lblUsers_Description, new Insets(0,18,0,-20));
         middleThirdView.setAlignment(Pos.CENTER);
         
         HBox middleFourthView = new HBox(lblLocationSlider , locationSlider );
