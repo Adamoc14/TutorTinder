@@ -5,20 +5,30 @@
  */
 package tindertutor;
 
+import java.sql.Array;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -41,6 +51,7 @@ public class TinderTutorMain extends Application {
     Scene SwipePage;
     Scene LoginRealPage;
     Scene SignUpPage;
+    Scene SignUpStudentPage;
     Scene SettingsPage;
     
     @Override
@@ -81,13 +92,188 @@ public class TinderTutorMain extends Application {
             Label lblTeacher = new Label("Teacher ?");
             
             btnStudent.setOnAction(event-> {
-                System.out.println("Well");
-            });
-            btnTeacher.setOnAction(evnt -> {
-                System.out.println("Boi");
+                TinderTutorSignUpStudent tindertutorSignUpStudent = new TinderTutorSignUpStudent();
+                
+                ImageView logoView2 = new ImageView(new Image(getClass().getResourceAsStream("Assets/TinderTutorLogo.png"),120,120,true,true));
+                
+                Label lblStudentProf = new Label("Student Profile");
+                lblStudentProf.setTextFill(Color.RED);
+                lblStudentProf.setStyle("-fx-font-size: 20;");
+                
+                Image mainImage = new Image(getClass().getResourceAsStream("Assets/MainTestProfilePic.jpg"),280,280,true,true);
+                Circle mainPicView = new Circle(250,250,50);
+                mainPicView.setFill(new ImagePattern(mainImage));
+                
+                Label lblUsers_Name = new Label("Name");
+                TextField txtUsers_Name = new TextField();
+                
+                Label lblUsers_Email = new Label("Email");
+                TextField txtUsers_Email = new TextField();
+                
+                Label lblUsers_Pass = new Label("Password");
+                PasswordField passUsers_Email = new PasswordField(); 
+                
+                ImageView loginDetails = new ImageView(new Image(getClass().getResourceAsStream("Assets/LoginDetailsLine.png"),400,400,true,true));
+                
+                Label lblUsers_Year = new Label("Year");
+                TextField txtUsers_Year = new TextField();
+                
+                Label lblUsers_Course = new Label("Course");
+                TextField txtUsers_Course = new TextField();
+                
+                Label lblUsers_Module = new Label("Module");
+                TextField txtUsers_Module = new TextField();
+                
+                Label lblLocationSlider = new Label("Location");
+                
+                Slider locationSlider = new Slider(0, 1, 0.5);
+                locationSlider.setShowTickMarks(true);
+                locationSlider.setShowTickLabels(true);
+                locationSlider.setMajorTickUnit(0.25f);
+                locationSlider.setBlockIncrement(0.1f);
+                
+                Label lblUsers_preferredPrice = new Label("Price");
+                ObservableList<String> preferredPriceOptions = 
+                FXCollections.observableArrayList(
+                    "1.00",
+                    "2.00",
+                    "3.00"
+                );
+                ComboBox priceComboBox = new ComboBox(preferredPriceOptions);
+                
+                Label lblUsers_Type = new Label("Type");
+                
+                ToggleGroup typeGroup = new ToggleGroup();
+                RadioButton button1 = new RadioButton("Single");
+                button1.setToggleGroup(typeGroup);
+                button1.setSelected(true);
+                RadioButton button2 = new RadioButton("Group");
+                button2.setToggleGroup(typeGroup);
+                
+                
+                Button btnSignUpReal = new Button("Sign Up");
+                
+                btnSignUpReal.setOnAction(r-> {
+                  String ErrorsArray[];
+                  String Student_Name = txtUsers_Name.getText();
+                  String Student_Email = txtUsers_Email.getText();
+                  String Student_Password = passUsers_Email.getText();
+                  double Student_Year = Double.valueOf(txtUsers_Year.getText());
+                  String Student_Course = txtUsers_Course.getText();
+                  String Student_Module = txtUsers_Module.getText();
+                  double Student_Location = locationSlider.getValue();
+//                  double Student_Price = 
+                  String Student_Type = typeGroup.getSelectedToggle().selectedProperty().toString();
+                    
+                  try {
+                    Connection con = DriverManager.getConnection("jdbc:mysql://192.168.64.2/Tinder_Tutor","Adam","gaelic football");
+                    Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery("Select * From Student_Users");
+                    
+                    
+                    Student student = new Student();
+                    
+                    student.setStudentName(Student_Name);
+                    student.setStudentEmail(Student_Email);
+                    student.setStudentPass(Student_Password);
+                    student.setStudentYear(Student_Year);
+                    student.setStudentCourse(Student_Course);
+                    student.setStudentModule(Student_Module);
+                    student.setStudentLocation(Student_Location);
+                    
+                    System.out.println(student.toString());
+                    
+                    
+                    while(rs.next()){
+                        System.out.println(rs.getString(1));
+                        System.out.println(rs.getString(2));
+                        System.out.println(rs.getString(3));
+                        System.out.println(rs.getString(4));
+                    }
+                    
+                    
+                 
+                  } catch(SQLException y){
+                    System.out.println(y.getMessage());
+                  } 
+                  
+                });
+
+                SignUpStudentPage = new Scene(tindertutorSignUpStudent.SignUpStudentView(logoView2,lblStudentProf ,mainPicView, lblUsers_Name,txtUsers_Name,lblUsers_Email,txtUsers_Email,lblUsers_Pass,passUsers_Email, loginDetails,lblUsers_Year, txtUsers_Year,lblUsers_Course, txtUsers_Course,lblUsers_Module, txtUsers_Module, lblLocationSlider, locationSlider, lblUsers_preferredPrice , priceComboBox , lblUsers_Type , button1 , button2,  btnSignUpReal), 600 ,700);
+              
+                window.setScene(SignUpStudentPage);
             });
             
-            SignUpPage = new Scene(tindertutorSignUp.SignUpView(logoView,lblSignUp , lblUserType, btnStudent, btnTeacher,  lblStudent , lblTeacher), 600 ,700);
+            
+            btnTeacher.setOnAction(evnt -> {
+                TinderTutorSignUpTutor tindertutorSignUpTutor = new TinderTutorSignUpTutor();
+                
+                ImageView logoView2 = new ImageView(new Image(getClass().getResourceAsStream("Assets/TinderTutorLogo.png"),120,120,true,true));
+
+                Label lblTutorProf = new Label("Tutor Profile");
+                lblTutorProf.setTextFill(Color.RED);
+                lblTutorProf.setStyle("-fx-font-size: 20;");
+
+                Image mainImage2 = new Image(getClass().getResourceAsStream("Assets/MainTestProfilePic.jpg"),280,280,true,true);
+                Circle mainPicView2 = new Circle(250,250,50);
+                mainPicView2.setFill(new ImagePattern(mainImage2));
+
+                Label lblUsers_Name2 = new Label("Name");
+                TextField txtUsers_Name = new TextField();
+
+                Label lblUsers_Email = new Label("Email");
+                TextField txtUsers_Email = new TextField();
+
+                Label lblUsers_Pass = new Label("Password");
+                PasswordField passUsers_Email = new PasswordField(); 
+
+                ImageView loginDetails = new ImageView(new Image(getClass().getResourceAsStream("Assets/LoginDetailsLine.png"),400,400,true,true));
+
+                Label lblUsers_RLinks= new Label("Relevant Links");
+                TextField txtUsers_RLinks = new TextField();
+
+                Label lblUsers_Qualifications = new Label("Qualifications");
+                TextField txtUsers_Qualifications = new TextField();
+
+                Label lblUsers_Description = new Label("Description");
+                TextField txtUsers_Description = new TextField();
+
+                Label lblLocationSlider = new Label("Location");
+
+                Slider locationSlider = new Slider(0, 1, 0.5);
+                locationSlider.setShowTickMarks(true);
+                locationSlider.setShowTickLabels(true);
+                locationSlider.setMajorTickUnit(0.25f);
+                locationSlider.setBlockIncrement(0.1f);
+
+                Label lblUsers_preferredPrice = new Label("Price");
+                ObservableList<String> preferredPriceOptions = 
+                FXCollections.observableArrayList(
+                    "1.00",
+                    "2.00",
+                    "3.00"
+                );
+                ComboBox priceComboBox = new ComboBox(preferredPriceOptions);
+
+                Label lblUsers_Type = new Label("Type");
+
+                ToggleGroup typeGroup = new ToggleGroup();
+                RadioButton button1 = new RadioButton("Single");
+                button1.setToggleGroup(typeGroup);
+                button1.setSelected(true);
+                RadioButton button2 = new RadioButton("Group");
+                button2.setToggleGroup(typeGroup);
+
+
+                Button btnSignUpReal = new Button("Sign Up");
+
+                SignUpStudentPage = new Scene(tindertutorSignUpTutor.SignUpTutorView(logoView2,lblTutorProf ,mainPicView2, lblUsers_Name2,txtUsers_Name,lblUsers_Email,txtUsers_Email,lblUsers_Pass,passUsers_Email, loginDetails,lblUsers_RLinks, txtUsers_RLinks,lblUsers_Qualifications, txtUsers_Qualifications,lblUsers_Description, txtUsers_Description, lblLocationSlider, locationSlider, lblUsers_preferredPrice , priceComboBox , lblUsers_Type , button1 , button2,  btnSignUpReal), 600 ,700);
+
+                window.setScene(SignUpStudentPage);
+            });
+            
+            SignUpPage = new Scene(tindertutorSignUp.SignUpView(logoView,lblSignUp , lblUserType, btnStudent, btnTeacher,  lblStudent , lblTeacher ), 600 ,700);
+              
             window.setScene(SignUpPage);
         });
         
@@ -106,7 +292,6 @@ public class TinderTutorMain extends Application {
             tinderTutorLogin.LoginView(image, lblSignIn, txtUsername, txtPassword, forgotPass, btnLoginReal).setMargin(lblSignIn , new Insets(-40 ,0 ,0,0));
             LoginRealPage = new Scene(tinderTutorLogin.LoginView(image, lblSignIn, txtUsername, txtPassword, forgotPass, btnLoginReal) , 600 ,700);
             window.setScene(LoginRealPage);
-        
             btnLoginReal.setOnAction(event -> {
                     if(txtUsername.getText().equals("Adam")&& txtPassword.getText().equals("1234")){
 
@@ -145,6 +330,75 @@ public class TinderTutorMain extends Application {
                             Label lblUserType = new Label("Student");
                             Label lblUniName = new Label("Stanford");
                             Button btnUserProfile = new Button("My Profile");
+                            
+                            btnUserProfile.setOnAction(evet -> {
+                              TinderTutorSignUpStudent tindertutorSignUpStudent = new TinderTutorSignUpStudent();
+                
+                                ImageView logoView2 = new ImageView(new Image(getClass().getResourceAsStream("Assets/TinderTutorLogo.png"),120,120,true,true));
+
+                                Label lblStudentProf = new Label("Student Profile");
+                                lblStudentProf.setTextFill(Color.RED);
+                                lblStudentProf.setStyle("-fx-font-size: 20;");
+
+                                Image mainImage2 = new Image(getClass().getResourceAsStream("Assets/MainTestProfilePic.jpg"),280,280,true,true);
+                                Circle mainPicView2 = new Circle(250,250,50);
+                                mainPicView2.setFill(new ImagePattern(mainImage2));
+
+                                Label lblUsers_Name2 = new Label("Name");
+                                TextField txtUsers_Name = new TextField();
+
+                                Label lblUsers_Email = new Label("Email");
+                                TextField txtUsers_Email = new TextField();
+
+                                Label lblUsers_Pass = new Label("Password");
+                                PasswordField passUsers_Email = new PasswordField(); 
+
+                                ImageView loginDetails = new ImageView(new Image(getClass().getResourceAsStream("Assets/LoginDetailsLine.png"),400,400,true,true));
+
+                                Label lblUsers_Year = new Label("Year");
+                                TextField txtUsers_Year = new TextField();
+
+                                Label lblUsers_Course = new Label("Course");
+                                TextField txtUsers_Course = new TextField();
+
+                                Label lblUsers_Module = new Label("Module");
+                                TextField txtUsers_Module = new TextField();
+
+                                Label lblLocationSlider = new Label("Location");
+
+                                Slider locationSlider = new Slider(0, 1, 0.5);
+                                locationSlider.setShowTickMarks(true);
+                                locationSlider.setShowTickLabels(true);
+                                locationSlider.setMajorTickUnit(0.25f);
+                                locationSlider.setBlockIncrement(0.1f);
+
+                                Label lblUsers_preferredPrice = new Label("Price");
+                                ObservableList<String> preferredPriceOptions = 
+                                FXCollections.observableArrayList(
+                                    "1.00",
+                                    "2.00",
+                                    "3.00"
+                                );
+                                ComboBox priceComboBox = new ComboBox(preferredPriceOptions);
+
+                                Label lblUsers_Type = new Label("Type");
+
+                                ToggleGroup typeGroup = new ToggleGroup();
+                                RadioButton button1 = new RadioButton("Single");
+                                button1.setToggleGroup(typeGroup);
+                                button1.setSelected(true);
+                                RadioButton button2 = new RadioButton("Group");
+                                button2.setToggleGroup(typeGroup);
+
+
+                                Button btnSignUpReal = new Button("Sign Up");
+
+                                SignUpStudentPage = new Scene(tindertutorSignUpStudent.SignUpStudentView(logoView2,lblStudentProf ,mainPicView2, lblUsers_Name2,txtUsers_Name,lblUsers_Email,txtUsers_Email,lblUsers_Pass,passUsers_Email, loginDetails,lblUsers_Year, txtUsers_Year,lblUsers_Course, txtUsers_Course,lblUsers_Module, txtUsers_Module, lblLocationSlider, locationSlider, lblUsers_preferredPrice , priceComboBox , lblUsers_Type , button1 , button2,  btnSignUpReal), 600 ,700);
+
+                                window.setScene(SignUpStudentPage);
+                            });
+                            
+                            
                             btnUserProfile.setStyle("-fx-background-radius: 20px; -fx-padding: 4 65; -fx-background-color: #ef5350; -fx-text-fill: white; -fx-font-weight: bold");
                             ImageView logoPlusView = new ImageView(new Image(getClass().getResourceAsStream("Assets/TinderTutorLogoPlus.png"),150,100,false,true));
                             SettingsPage = new Scene(tinderTutorSettings.SettingsView(settingsView, formatView ,userPicView , lblUserName ,lblUserType ,lblUniName, btnUserProfile ,logoPlusView), 600, 700);
@@ -174,12 +428,15 @@ public class TinderTutorMain extends Application {
         VBox socialButtons = new VBox(20, btnLinkedIn ,btnGooglePlus, btnFacebook );
         socialButtons.setAlignment(Pos.CENTER);
         
+        
         //Setting up the VBox to take everything put it on itself and then add to the scene which is added to the stage 
         VBox root = new VBox(imagePos , buttonsPos , socialButtons);
+        root.setStyle("-fx-background-color: #ffffff");
         root.setAlignment(Pos.CENTER);
         
         //Setting up the scene
         Scene scene = new Scene(root , 600 , 700);
+        
         
         //Setting up the stage
         primaryStage.setTitle("Tutor Tinder");
