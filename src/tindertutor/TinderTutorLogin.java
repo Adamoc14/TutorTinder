@@ -26,7 +26,7 @@ public class TinderTutorLogin  {
         VBox layout = new VBox(20);
         layout.setAlignment(Pos.CENTER);
         layout.getChildren().addAll(imageview ,lblSignIn , txtUsername , txtPassword , forgotPass ,btnLoginReal);
-        
+        layout.setStyle("-fx-background-color: #ffffff");
         
         
         return layout;

@@ -44,9 +44,11 @@ public class TinderTutorMainSwipe{
         StackPane bottomSwipeView = new StackPane( grpBtns , FormattingView );
         bottomSwipeView.setAlignment(Pos.BOTTOM_CENTER);
         bottomSwipeView.setStyle("-fx-background-image: url('Assets/FormattingMain.png')");
+        bottomSwipeView.setMargin(grpBtns, new Insets(30,0,0,30));
+        
         
         VBox overallLayout = new VBox(5, topSwipeView , middleSwipeView , labelsView , bottomSwipeView);
-        
+        overallLayout.setStyle("-fx-background-color: #ffffff");
         
      return overallLayout;   
         
