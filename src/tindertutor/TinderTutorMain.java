@@ -324,8 +324,8 @@ public class TinderTutorMain extends Application {
                             Label lblUsers_Subject= new Label("Subject: ");
                             Label lblUsers_Location= new Label("Location: ");
                             Label lblUsers_Price= new Label("Price: ");
-                            Button btnCheckYes= new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnYes.png"),60,30,true,true)));
-                            Button btnCheckNo = new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnNo.png"),60,30,true,true)));
+                            Button btnCheckYes= new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnYes.png"),90,60,true,true)));
+                            Button btnCheckNo = new Button("", new ImageView(new Image(getClass().getResourceAsStream("Assets/btnNo.png"),90,60,true,true)));
                             btnCheckYes.setStyle("-fx-background-color: transparent;");
                             Group grpBtns = new Group(btnCheckNo , btnCheckYes);
                             btnCheckYes.toFront();
@@ -348,7 +348,7 @@ public class TinderTutorMain extends Application {
                         });
                         btnCheckNo.setStyle("-fx-background-color: transparent;");
                         ImageView FormattingView = new ImageView(new Image(getClass().getResourceAsStream("Assets/FormattingMain.png"),250,150,false,true));
-                        SwipePage = new Scene(tinderTutorSwipe.SwipeView(btnSettings, logoView, btnChat, mainPicView, lblUsers_Name, lblUsers_Qualification, lblUsers_Subject, lblUsers_Location, lblUsers_Price, grpBtns , FormattingView) , 600 , 700);
+                        SwipePage = new Scene(tinderTutorSwipe.SwipeView(btnSettings, logoView, btnChat, mainPicView, lblUsers_Name, lblUsers_Qualification, lblUsers_Subject, lblUsers_Location, lblUsers_Price, btnCheckNo , btnCheckYes) , 600 , 700);
                         window.setScene(SwipePage);
                         
                         btnSettings.setOnAction(evt-> {

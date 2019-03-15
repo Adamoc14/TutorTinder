@@ -22,7 +22,7 @@ import javafx.scene.shape.Circle;
  */
 public class TinderTutorMainSwipe{
     
-    public VBox SwipeView(Button btnSettings , ImageView logoView , Button btnChat , Circle mainPicView , Label lblUsers_Name , Label lblUsers_Qualification , Label lblUsers_Subject , Label lblUsers_Location , Label lblUsers_Price ,  Group grpBtns,  ImageView FormattingView){
+    public VBox SwipeView(Button btnSettings , ImageView logoView , Button btnChat , Circle mainPicView , Label lblUsers_Name , Label lblUsers_Qualification , Label lblUsers_Subject , Label lblUsers_Location , Label lblUsers_Price ,  Button btnCheckNo, Button btnCheckYes  ){
         HBox topSwipeView = new HBox(btnSettings , logoView , btnChat);
         topSwipeView.setMargin(btnSettings, new Insets(10,80,0,0));
         topSwipeView.setMargin(btnChat, new Insets(12,0,0,80));
@@ -41,11 +41,12 @@ public class TinderTutorMainSwipe{
         labelsView.setMargin(lblUsers_Price , new Insets(0,0,0,-100));
         
         
-        StackPane bottomSwipeView = new StackPane( grpBtns , FormattingView );
+        HBox bottomSwipeView = new HBox( btnCheckNo , btnCheckYes );
         bottomSwipeView.setAlignment(Pos.BOTTOM_CENTER);
         bottomSwipeView.setStyle("-fx-background-image: url('Assets/FormattingMain.png')");
-        bottomSwipeView.setMargin(grpBtns, new Insets(30,0,0,30));
-        
+        bottomSwipeView.setMargin(btnCheckYes, new Insets(30,0,0,10));
+        bottomSwipeView.setMargin(btnCheckNo, new Insets(30,10,0,0));
+       
         
         VBox overallLayout = new VBox(5, topSwipeView , middleSwipeView , labelsView , bottomSwipeView);
         overallLayout.setStyle("-fx-background-color: #ffffff");
