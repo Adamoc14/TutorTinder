@@ -24,6 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
@@ -54,6 +55,7 @@ public class TinderTutorMain extends Application {
     Scene SettingsPage;
     Scene GrindRecieved;
     Scene WaitScreen;
+    Scene MessageScreen;
     
     @Override
     public void start(Stage primaryStage) {
@@ -343,6 +345,29 @@ public class TinderTutorMain extends Application {
                             Label lblGrindRecievedConfirmation = new Label("This tutor is available for a grind with you !");
                             lblGrindRecievedConfirmation.setStyle("-fx-font-size : 20;");
                             Button btnMessageUser = new Button("Message...");
+                            
+                            
+                            btnMessageUser.setOnAction(o-> {
+                                
+                                TinderTutorMainMessageView tinderTutorMainMessageView = new TinderTutorMainMessageView();
+                                ImageView grindsView = new ImageView(new Image(getClass().getResourceAsStream("Assets/btnChat.png"),90,80,false,true));;
+                                ImageView formatView = new ImageView(new Image(getClass().getResourceAsStream("Assets/MainFormatting.png"),650,150,false,true));
+                                Label lblUsers_NameMessage = new Label("John Dorney");
+                                Image mainImage_Pic = new Image(getClass().getResourceAsStream("Assets/MainTestProfilePic.jpg"),220,220,true,true);
+                                Circle Users_Pic = new Circle(500,500,100);
+                                Users_Pic.setFill(new ImagePattern(mainImage_Pic));
+                                Label lblInvitation = new Label("Set up a grind with John");
+                                ImageView FormatBottomView = new ImageView(new Image(getClass().getResourceAsStream("Assets/formatBottom.png"),120,120,true,true));
+                                TextArea txtMessageMainArea = new TextArea();
+                                txtMessageMainArea.setStyle("-fx-background-radius: 20px;");
+                                Button btnSendMessage = new Button("Send Message");
+                                btnSendMessage.setStyle("-fx-background-radius: 20px; -fx-padding: 4 65; -fx-background-color: #ef5350; -fx-text-fill: white; -fx-font-weight: bold");
+                                MessageScreen = new Scene(tinderTutorMainMessageView.MainMessageView(grindsView, formatView, lblUsers_NameMessage, Users_Pic, lblInvitation, FormatBottomView, txtMessageMainArea , btnSendMessage), 600 ,700);
+                                window.setScene(MessageScreen);
+                            });
+                            
+                            
+                            
                             GrindRecieved = new Scene(tinderTutorRecieved.GrindRecievedView(logoView3, picGrindRecieved, StudentPicView, TutorPicView, lblGrindRecievedConfirmation, btnMessageUser), 600 ,700);
                             window.setScene(GrindRecieved);
                         });
