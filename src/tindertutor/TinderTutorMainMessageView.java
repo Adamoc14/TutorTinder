@@ -49,9 +49,8 @@ public class TinderTutorMainMessageView {
         sixthView.setMargin(btnSendMessage , new Insets(20,0,0,0));
         
         
-        
-        
         VBox layout = new VBox(topView, middleView , thirdView , fourthView , fifthView , sixthView);
+        layout.setStyle("-fx-background-color: #ffffff");
         return layout; 
     }
     
