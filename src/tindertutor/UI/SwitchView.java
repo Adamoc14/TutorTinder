@@ -11,26 +11,60 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
  * @author adamoc
  */
 public class SwitchView {
-  //The function to return the login view to the app 
-     public VBox LoginView(ImageView imageview ,Label lblSignIn , TextField txtUsername , PasswordField txtPassword , Label forgotPass , Button btnLoginReal){
-        
-        VBox layout = new VBox(20);
+    
+    //The function to return the main start view to the app 
+    public VBox MainView(ImageView logoView, Button btnLogin, Button btnSignUp, Button btnLinkedIn, Button btnFacebook, Button btnGooglePlus){
+    // Setting the images position
+       HBox imagePos = new HBox(logoView);
+       imagePos.setAlignment(Pos.CENTER);
+       imagePos.setMargin(logoView , new Insets(-50 ,0,0,0));
+       
+       //Setting the Buttons positions
+       HBox buttonsPos = new HBox(btnLogin , btnSignUp);
+       buttonsPos.setAlignment(Pos.CENTER);
+       buttonsPos.setSpacing(20);
+       buttonsPos.setMargin(btnLogin, new Insets(-30,0,30,0));
+       buttonsPos.setMargin(btnSignUp, new Insets(-30,0,30,0));
+       
+       //Setting the social buttons positions
+       VBox socialButtons = new VBox(20, btnLinkedIn ,btnGooglePlus, btnFacebook );
+       socialButtons.setAlignment(Pos.CENTER);
+       
+       //Setting up the VBox to take everything put it on itself and then add to the scene which is added to the stage         
+        VBox layout = new VBox(20 ,imagePos , buttonsPos , socialButtons);
+        layout.setStyle("-fx-background-color: #ffffff");
         layout.setAlignment(Pos.CENTER);
-        layout.getChildren().addAll(imageview ,lblSignIn , txtUsername , txtPassword , forgotPass ,btnLoginReal);
+        return layout;
+    }
+
+  //The function to return the login view to the app 
+     public VBox LoginView(ImageView imageview ,Label lblSignIn , TextField txtUsername , PasswordField txtPassword , Label forgotPass , Button btnBack , Button btnLoginReal){
+        
+        VBox firstLayout = new VBox(20,imageview ,lblSignIn , txtUsername , txtPassword , forgotPass );
+        firstLayout.setAlignment(Pos.CENTER);
+        
+        HBox secondLayout = new HBox(btnBack , btnLoginReal);
+        secondLayout.setAlignment(Pos.CENTER);
+        secondLayout.setSpacing(10);
+         
+        VBox layout = new VBox(20,firstLayout , secondLayout);
+        layout.setAlignment(Pos.CENTER);
         layout.setStyle("-fx-background-color: #ffffff");
         
         
@@ -40,11 +74,17 @@ public class SwitchView {
      
      
    //Th function to return the sign up view to the app 
-     public VBox SignUpView( ImageView logoView, Label lblSignUp , Label lbluserType , Button btnStudent , Button btnTeacher , Label lblStudent , Label lblTeacher){
+     public VBox SignUpView( Button btnBackArrow , ImageView logoView, Label lblSignUp , Label lbluserType , Button btnStudent , Button btnTeacher , Label lblStudent , Label lblTeacher){
         
+        VBox VtopView = new VBox( btnBackArrow); 
+        VtopView.setAlignment(Pos.TOP_LEFT);
+        
+         
         VBox topView = new VBox( logoView,  lblSignUp, lbluserType); 
         topView.setAlignment(Pos.TOP_CENTER);
-        topView.setMargin(lbluserType, new Insets(70,0,0,0));
+        topView.setMargin(logoView, new Insets(-10,0,0,0));
+        topView.setMargin(lblSignUp, new Insets(-10,0,0,0));
+        topView.setMargin(lbluserType, new Insets(30,0,0,0));
         
         HBox middleView = new HBox(btnStudent , btnTeacher);
         middleView.setAlignment(Pos.CENTER);
@@ -56,9 +96,7 @@ public class SwitchView {
         bottomView.setAlignment(Pos.BOTTOM_CENTER);
         bottomView.setSpacing(150);
         
-        VBox layout = new VBox(20 ,topView , middleView , bottomView);
-        
-        
+        VBox layout = new VBox(20 , VtopView, topView , middleView , bottomView);
         
         layout.setStyle("-fx-background-color: #ffffff");
         return layout;
@@ -66,7 +104,7 @@ public class SwitchView {
     }
      
     //The function to return the Student Sign up view
-     public VBox SignUpStudentView( ImageView logoView2 , Label lblStudentProf , Circle mainPicView , Label lblUsers_Name , TextField txtUsers_Name , Label lblUsers_Email , TextField txtUsers_Email , Label lblUsers_Pass , PasswordField txtUsers_Pass , ImageView loginDetails , Label lblUsers_Year ,  TextField txtUsers_Year , Label lblUsers_Course , TextField txtUsers_Course , Label lblUsers_Module , TextField txtUsers_Module ,Label lblLocationSlider, Slider locationSlider , Label lblUsers_PreferredPrice , ComboBox priceComboBox , Label lblUsers_Type , RadioButton button1 , RadioButton button2 ,  Button btnSignUpReal ){
+     public VBox SignUpStudentView( ImageView logoView2 , Label lblStudentProf , Circle mainPicView , Label lblSUsers_Name , TextField txtSUsers_Name , Label lblSUsers_Username , TextField txtSUsers_Username , Label lblSUsers_Pass , PasswordField txtSUsers_Pass , ImageView loginDetails , Label lblSUsers_Year ,  TextField txtSUsers_Year ,  Label lblSUsers_ModuleCode , TextField txtSUsers_ModuleCode ,Label lblSLocationSlider, Slider SlocationSlider ,  Label lblSUsers_Type , ComboBox StypeComboBox , Label lblSUsers_PreferredPrice , TextField txtSPreferredPrice , Button btnBack ,  Button btnSignUpSReal ){
         
         HBox topLogoView = new HBox(logoView2); 
         topLogoView.setAlignment(Pos.TOP_RIGHT);
@@ -75,58 +113,53 @@ public class SwitchView {
         topViewLabel.setAlignment(Pos.TOP_CENTER);
         topViewLabel.setMargin(lblStudentProf ,new Insets(-40,0,0,0));
         
-        HBox topUserImageView = new HBox(mainPicView , lblUsers_Name , txtUsers_Name);
+        HBox topUserImageView = new HBox(mainPicView , lblSUsers_Name , txtSUsers_Name);
         topUserImageView.setAlignment(Pos.CENTER_LEFT);
         topUserImageView.setMargin(mainPicView,new Insets(0,20,0,30));
-        topUserImageView.setMargin(lblUsers_Name, new Insets(-20,10,0,40));
-        topUserImageView.setMargin(txtUsers_Name, new Insets(-20,10,0,5));
+        topUserImageView.setMargin(lblSUsers_Name, new Insets(-20,10,0,40));
+        topUserImageView.setMargin(txtSUsers_Name, new Insets(-20,10,0,5));
         
-        HBox topFirstView = new HBox(lblUsers_Email ,txtUsers_Email);
-        topFirstView.setMargin(lblUsers_Email, new Insets(-65,12,0,10));
-        topFirstView.setMargin(txtUsers_Email, new Insets(-65,12,0,5));
+        HBox topFirstView = new HBox(lblSUsers_Username ,txtSUsers_Username);
+        topFirstView.setMargin(lblSUsers_Username, new Insets(-65,12,0,10));
+        topFirstView.setMargin(txtSUsers_Username, new Insets(-65,12,0,5));
         topFirstView.setAlignment(Pos.CENTER);
         
-        HBox topSecondView = new HBox(lblUsers_Pass ,txtUsers_Pass);
-        topSecondView.setMargin(lblUsers_Pass, new Insets(-20,18,0,-10));
-        topSecondView.setMargin(txtUsers_Pass, new Insets(-20,20,0,0));
+        HBox topSecondView = new HBox(lblSUsers_Pass ,txtSUsers_Pass);
+        topSecondView.setMargin(lblSUsers_Pass, new Insets(-20,18,0,-10));
+        topSecondView.setMargin(txtSUsers_Pass, new Insets(-20,20,0,0));
         topSecondView.setAlignment(Pos.CENTER);
         
         
         HBox topThirdView = new HBox(loginDetails);
         topThirdView.setAlignment(Pos.CENTER);
         
-        HBox middleFirstView = new HBox(lblUsers_Year,txtUsers_Year );
-        topSecondView.setMargin(lblUsers_Year, new Insets(0,18,0,10));
-        topSecondView.setMargin(txtUsers_Year, new Insets(0,20,0,5));
+        HBox middleFirstView = new HBox(lblSUsers_Year,txtSUsers_Year );
+        topSecondView.setMargin(lblSUsers_Year, new Insets(0,18,0,10));
+        topSecondView.setMargin(txtSUsers_Year, new Insets(0,20,0,5));
         middleFirstView.setAlignment(Pos.CENTER);
         
-        HBox middleSecondView = new HBox(lblUsers_Course , txtUsers_Course);
-        middleSecondView.setMargin(lblUsers_Course, new Insets(0,18,0,-10));
-        middleSecondView.setMargin(txtUsers_Course, new Insets(0,20,0,10));
-        middleSecondView.setAlignment(Pos.CENTER);
-        
-        HBox middleThirdView = new HBox(lblUsers_Module , txtUsers_Module );
-        middleThirdView.setMargin(lblUsers_Module, new Insets(0,18,0,-20));
+        HBox middleThirdView = new HBox(lblSUsers_ModuleCode , txtSUsers_ModuleCode );
+        middleThirdView.setMargin(lblSUsers_ModuleCode, new Insets(0,18,0,-20));
         middleThirdView.setAlignment(Pos.CENTER);
         
-        HBox middleFourthView = new HBox(lblLocationSlider , locationSlider );
-        middleFourthView.setMargin(lblLocationSlider , new Insets(0,18,0,-80));
+        HBox middleFourthView = new HBox(lblSLocationSlider , SlocationSlider );
+        middleFourthView.setMargin(lblSLocationSlider , new Insets(0,18,0,-80));
         middleFourthView.setAlignment(Pos.CENTER);
         
-        HBox middleFifthView = new HBox(lblUsers_PreferredPrice, priceComboBox );
-        middleFifthView.setMargin(lblUsers_PreferredPrice, new Insets(0,18,0,-20));
+        HBox middleFifthView = new HBox(lblSUsers_Type , StypeComboBox);
+        middleFifthView.setMargin(lblSUsers_Type, new Insets(0,18,0,-20));
         middleFifthView.setAlignment(Pos.CENTER);
         
-        HBox middleSixthView = new HBox(lblUsers_Type , button1 , button2);
-        
+        HBox middleSixthView = new HBox(lblSUsers_PreferredPrice, txtSPreferredPrice );
+        middleSixthView.setMargin(lblSUsers_PreferredPrice, new Insets(0,18,0,-20));
         middleSixthView.setAlignment(Pos.CENTER);
-        
-        HBox middleLastView = new HBox(btnSignUpReal);
+                
+        HBox middleLastView = new HBox(btnBack, btnSignUpSReal);
         middleLastView.setAlignment(Pos.CENTER);
+        middleLastView.setSpacing(10);
         
         
-        
-        VBox layout = new VBox(20 ,topLogoView , topViewLabel ,topUserImageView,topFirstView, topSecondView , topThirdView , middleFirstView ,middleSecondView, middleThirdView, middleFourthView, middleFifthView , middleSixthView , middleLastView );
+        VBox layout = new VBox(20 ,topLogoView , topViewLabel ,topUserImageView,topFirstView, topSecondView , topThirdView , middleFirstView , middleThirdView, middleFourthView, middleFifthView , middleSixthView , middleLastView );
         
         
         layout.setStyle("-fx-background-color: #ffffff");
@@ -136,7 +169,7 @@ public class SwitchView {
     }
      
     //The function to return the Tutor Sign up view
-      public VBox SignUpTutorView( ImageView logoView2 , Label lblTutorProf , Circle mainPicView , Label lblUsers_Name , TextField txtUsers_Name , Label lblUsers_Email , TextField txtUsers_Email , Label lblUsers_Pass , PasswordField txtUsers_Pass , ImageView loginDetails , Label lblUsers_RLinks ,  TextField txtUsers_RLinks , Label lblUsers_Qualifications , TextField txtUsers_Qualifications , Label lblUsers_Description , TextField txtUsers_Description ,Label lblLocationSlider, Slider locationSlider , Label lblUsers_PreferredPrice , ComboBox priceComboBox , Label lblUsers_Type , RadioButton button1 , RadioButton button2 ,  Button btnSignUpReal ){
+      public VBox SignUpTutorView( ImageView logoView2 , Label lblTutorProf , Circle mainPicView , Label lblTUsers_Name , TextField txtTUsers_Name , Label lblTUsers_Username , TextField txtTUsers_Username , Label lblTUsers_Pass , PasswordField txtTUsers_Pass , ImageView loginDetails , Label lblTUsers_SubjectArea ,  TextField txtTUsers_SubjectArea , Label lblTUsers_Qualifications , TextField txtTUsers_Qualifications , Label lblTLocationSlider, Slider TlocationSlider ,  Label lblTUsers_Type , ComboBox TtypeComboBox , Label lblTUsers_PreferredPrice , TextField txtTPreferredPrice , Button btnBack ,  Button btnSignUpTReal ){
         
         HBox topLogoView = new HBox(logoView2); 
         topLogoView.setAlignment(Pos.TOP_RIGHT);
@@ -145,58 +178,56 @@ public class SwitchView {
         topViewLabel.setAlignment(Pos.TOP_CENTER);
         topViewLabel.setMargin(lblTutorProf ,new Insets(-40,0,0,0));
         
-        HBox topUserImageView = new HBox(mainPicView , lblUsers_Name , txtUsers_Name);
+        HBox topUserImageView = new HBox(mainPicView , lblTUsers_Name , txtTUsers_Name);
         topUserImageView.setAlignment(Pos.CENTER_LEFT);
         topUserImageView.setMargin(mainPicView,new Insets(0,20,0,30));
-        topUserImageView.setMargin(lblUsers_Name, new Insets(-20,10,0,40));
-        topUserImageView.setMargin(txtUsers_Name, new Insets(-20,10,0,5));
+        topUserImageView.setMargin(lblTUsers_Name, new Insets(-20,10,0,40));
+        topUserImageView.setMargin(txtTUsers_Name, new Insets(-20,10,0,5));
         
-        HBox topFirstView = new HBox(lblUsers_Email ,txtUsers_Email);
-        topFirstView.setMargin(lblUsers_Email, new Insets(-65,12,0,10));
-        topFirstView.setMargin(txtUsers_Email, new Insets(-65,12,0,5));
+        HBox topFirstView = new HBox(lblTUsers_Username ,txtTUsers_Username);
+        topFirstView.setMargin(lblTUsers_Username, new Insets(-65,12,0,10));
+        topFirstView.setMargin(txtTUsers_Username, new Insets(-65,12,0,5));
         topFirstView.setAlignment(Pos.CENTER);
         
-        HBox topSecondView = new HBox(lblUsers_Pass ,txtUsers_Pass);
-        topSecondView.setMargin(lblUsers_Pass, new Insets(-20,18,0,-10));
-        topSecondView.setMargin(txtUsers_Pass, new Insets(-20,20,0,0));
+        HBox topSecondView = new HBox(lblTUsers_Pass ,txtTUsers_Pass);
+        topSecondView.setMargin(lblTUsers_Pass, new Insets(-20,18,0,-10));
+        topSecondView.setMargin(txtTUsers_Pass, new Insets(-20,20,0,0));
         topSecondView.setAlignment(Pos.CENTER);
         
         
         HBox topThirdView = new HBox(loginDetails);
         topThirdView.setAlignment(Pos.CENTER);
         
-        HBox middleFirstView = new HBox(lblUsers_RLinks,txtUsers_RLinks );
-        topSecondView.setMargin(lblUsers_RLinks, new Insets(0,18,0,10));
-        topSecondView.setMargin(txtUsers_RLinks, new Insets(0,20,0,5));
+        HBox middleFirstView = new HBox(lblTUsers_SubjectArea,txtTUsers_SubjectArea );
+        topSecondView.setMargin(lblTUsers_SubjectArea, new Insets(0,18,0,10));
+        topSecondView.setMargin(txtTUsers_SubjectArea, new Insets(0,20,0,5));
         middleFirstView.setAlignment(Pos.CENTER);
         
-        HBox middleSecondView = new HBox(lblUsers_Qualifications , txtUsers_Qualifications);
-        middleSecondView.setMargin(lblUsers_Qualifications, new Insets(0,18,0,-10));
-        middleSecondView.setMargin(txtUsers_Qualifications, new Insets(0,20,0,10));
+        HBox middleSecondView = new HBox(lblTUsers_Qualifications , txtTUsers_Qualifications);
+        middleSecondView.setMargin(lblTUsers_Qualifications, new Insets(0,18,0,-10));
+        middleSecondView.setMargin(txtTUsers_Qualifications, new Insets(0,20,0,10));
         middleSecondView.setAlignment(Pos.CENTER);
         
-        HBox middleThirdView = new HBox(lblUsers_Description , txtUsers_Description );
-        middleThirdView.setMargin(lblUsers_Description, new Insets(0,18,0,-20));
-        middleThirdView.setAlignment(Pos.CENTER);
         
-        HBox middleFourthView = new HBox(lblLocationSlider , locationSlider );
-        middleFourthView.setMargin(lblLocationSlider , new Insets(0,18,0,-80));
+        HBox middleFourthView = new HBox(lblTLocationSlider , TlocationSlider );
+        middleFourthView.setMargin(lblTLocationSlider , new Insets(0,18,0,-80));
         middleFourthView.setAlignment(Pos.CENTER);
         
-        HBox middleFifthView = new HBox(lblUsers_PreferredPrice, priceComboBox );
-        middleFifthView.setMargin(lblUsers_PreferredPrice, new Insets(0,18,0,-20));
+        HBox middleFifthView = new HBox(lblTUsers_Type , TtypeComboBox);
+        middleFifthView.setMargin(lblTUsers_Type, new Insets(0,18,0,-20));
         middleFifthView.setAlignment(Pos.CENTER);
         
-        HBox middleSixthView = new HBox(lblUsers_Type , button1 , button2);
-        
+        HBox middleSixthView = new HBox(lblTUsers_PreferredPrice, txtTPreferredPrice );
+        middleSixthView.setMargin(lblTUsers_PreferredPrice, new Insets(0,18,0,-20));
         middleSixthView.setAlignment(Pos.CENTER);
         
-        HBox middleLastView = new HBox(btnSignUpReal);
+        HBox middleLastView = new HBox(btnBack , btnSignUpTReal);
         middleLastView.setAlignment(Pos.CENTER);
+        middleLastView.setSpacing(10);
         
         
         
-        VBox layout = new VBox(20 ,topLogoView , topViewLabel ,topUserImageView,topFirstView, topSecondView , topThirdView , middleFirstView ,middleSecondView, middleThirdView, middleFourthView, middleFifthView , middleSixthView , middleLastView );
+        VBox layout = new VBox(20 ,topLogoView , topViewLabel ,topUserImageView,topFirstView, topSecondView , topThirdView , middleFirstView ,middleSecondView, middleFourthView, middleFifthView , middleSixthView , middleLastView );
         
         
         layout.setStyle("-fx-background-color: #ffffff");
@@ -232,8 +263,52 @@ public class SwitchView {
         
     }
     
+    public StackPane Tutor_UsersView(Rectangle rect , Circle userPicView , Label lblUser_Name , Label  lblUsers_Subject , Label lblUsers_Location , Label lblUsers_Type ){
+            
+            
+            VBox userPicViewLayout = new VBox(userPicView);
+            userPicViewLayout.setAlignment(Pos.BOTTOM_CENTER);
+            userPicViewLayout.setMargin(userPicView, new Insets(0,0,20,0));
+
+            VBox labelsView = new VBox(lblUser_Name, lblUsers_Subject , lblUsers_Location , lblUsers_Type);
+            labelsView.setAlignment(Pos.BOTTOM_CENTER);
+            
+            VBox OverallLayout = new VBox(userPicViewLayout , labelsView);
+            labelsView.setAlignment(Pos.CENTER);
+            
+            StackPane stack = new StackPane(rect , OverallLayout);
+            
+            
+            return stack;
+    }
+    
     //The function to return the main swipe page 
-    public VBox SwipeView(Button btnSettings , ImageView logoView4 , Button btnChat , Circle userPicView , Label lblUser_Name , Label lblUsers_Qualification , Label lblUsers_Subject , Label lblUsers_Location , Label lblUsers_Price ,  Button btnCheckNo, Button btnCheckYes  ){
+    public VBox SwipeView(Button btnSettings , ImageView logoView4 , Button btnChat , StackPane Tutor_Users ,   Button btnCheckNo, Button btnCheckYes  ){
+        HBox topSwipeView = new HBox(btnSettings , logoView4 , btnChat); 
+        topSwipeView.setMargin(btnSettings, new Insets(10,80,0,0));
+        topSwipeView.setMargin(btnChat, new Insets(12,0,0,80));
+        topSwipeView.setAlignment(Pos.TOP_CENTER);
+
+        
+        VBox middleSwipeView = new VBox(Tutor_Users);
+        middleSwipeView.setAlignment(Pos.BOTTOM_CENTER);
+        middleSwipeView.setMargin(Tutor_Users, new Insets(0,0,20,0));
+
+        
+        HBox bottomSwipeView = new HBox( btnCheckNo , btnCheckYes );
+        bottomSwipeView.setAlignment(Pos.BOTTOM_CENTER);
+        bottomSwipeView.setStyle("-fx-background-image: url('Assets/FormattingMain.png')");
+        bottomSwipeView.setMargin(btnCheckYes, new Insets(30,0,0,10));
+        bottomSwipeView.setMargin(btnCheckNo, new Insets(30,10,0,0));
+       
+        
+        VBox overallLayout = new VBox(5, topSwipeView , middleSwipeView , bottomSwipeView);
+        overallLayout.setStyle("-fx-background-color: #ffffff");
+        
+     return overallLayout;   
+        
+    }
+    public VBox SwipeTView(Button btnSettings , ImageView logoView4 , Button btnChat , Circle userPicView , Label lblUser_Name , Label lblQualifications, Label lblUsers_Type ){
         HBox topSwipeView = new HBox(btnSettings , logoView4 , btnChat);
         topSwipeView.setMargin(btnSettings, new Insets(10,80,0,0));
         topSwipeView.setMargin(btnChat, new Insets(12,0,0,80));
@@ -243,26 +318,50 @@ public class SwitchView {
         middleSwipeView.setAlignment(Pos.BOTTOM_CENTER);
         middleSwipeView.setMargin(userPicView, new Insets(0,0,20,0));
         
-        VBox labelsView = new VBox(lblUser_Name, lblUsers_Qualification , lblUsers_Subject , lblUsers_Location , lblUsers_Price);
+        VBox labelsView = new VBox(lblUser_Name, lblQualifications , lblUsers_Type);
         labelsView.setAlignment(Pos.BOTTOM_CENTER);
-        labelsView.setMargin(lblUser_Name , new Insets(0,0,0,-100));
-        labelsView.setMargin(lblUsers_Qualification , new Insets(0,0,0,-100));
-        labelsView.setMargin(lblUsers_Subject , new Insets(0,0,0,-100));
-        labelsView.setMargin(lblUsers_Location , new Insets(0,0,0,-100));
-        labelsView.setMargin(lblUsers_Price , new Insets(0,0,0,-100));
         
-        
-        HBox bottomSwipeView = new HBox( btnCheckNo , btnCheckYes );
-        bottomSwipeView.setAlignment(Pos.BOTTOM_CENTER);
-        bottomSwipeView.setStyle("-fx-background-image: url('Assets/FormattingMain.png')");
-        bottomSwipeView.setMargin(btnCheckYes, new Insets(30,0,0,10));
-        bottomSwipeView.setMargin(btnCheckNo, new Insets(30,10,0,0));
-       
-        
-        VBox overallLayout = new VBox(5, topSwipeView , middleSwipeView , labelsView , bottomSwipeView);
+        VBox overallLayout = new VBox(5, topSwipeView , middleSwipeView , labelsView );
         overallLayout.setStyle("-fx-background-color: #ffffff");
         
      return overallLayout;   
+        
+    }
+    
+    public VBox NotificationOverviewView(ImageView chatView, ImageView formatView , Label grindsLabel , ScrollPane scrollGrinds , Label NearestLabel , ScrollPane scrollNearby , Label grindsMessages , ScrollPane scrollMessages , Button btnBack ){
+        VBox topView = new VBox(chatView); 
+        topView.setAlignment(Pos.TOP_CENTER);
+        topView.setMargin(chatView , new Insets(20, 0,0,0));
+        
+        HBox middleView = new HBox(formatView);
+        middleView.setAlignment(Pos.TOP_LEFT);
+        middleView.setMargin(formatView, new Insets(-80,0,-60,-25));
+        
+        HBox thirdView = new HBox(grindsLabel);
+        thirdView.setAlignment(Pos.TOP_LEFT);
+        
+        HBox fourthView = new HBox(scrollGrinds);
+        fourthView.setAlignment(Pos.CENTER_LEFT);
+        
+        HBox fifthView = new HBox(NearestLabel);
+        fifthView.setAlignment(Pos.CENTER_LEFT);
+        
+        HBox sixthView = new HBox(scrollNearby);
+        sixthView.setAlignment(Pos.BOTTOM_LEFT);
+        
+        HBox seventhView = new HBox(grindsMessages);
+        seventhView.setAlignment(Pos.BOTTOM_LEFT);
+        
+        HBox eigthView = new HBox(scrollMessages);
+        eigthView.setAlignment(Pos.BASELINE_LEFT);
+        
+        HBox ninthView = new HBox(btnBack);
+        ninthView.setAlignment(Pos.BASELINE_CENTER);
+        
+        
+        VBox ovLayout= new VBox(20, topView , middleView , thirdView , fourthView , fifthView , sixthView , seventhView , eigthView , ninthView );
+        ovLayout.setStyle("-fx-background-color: #ffffff");
+        return ovLayout;
         
     }
     
@@ -296,7 +395,7 @@ public class SwitchView {
     }
     
     //The function to return the Settings View 
-    public VBox SettingsView( ImageView settingsView, ImageView formatView , Circle userPicView , Label lblUserName , Label lblUsersType , Label lblUniName,  Button btnUserProfile , ImageView logoPlusView){
+    public VBox SettingsView( ImageView settingsView, ImageView formatView , Circle userPicView , Label lblUserName , Label lblModuleCode, Label lblUsersType , Button btnUserProfile , Button btnBack , ImageView logoPlusView){
         
         VBox topView = new VBox(settingsView); 
         topView.setAlignment(Pos.TOP_CENTER);
@@ -307,7 +406,7 @@ public class SwitchView {
         middleView.setMargin(formatView, new Insets(-80,0,-60,-25));
         
         
-        VBox bottomView = new VBox(userPicView , lblUserName,lblUsersType,lblUniName,btnUserProfile,logoPlusView );
+        VBox bottomView = new VBox(userPicView , lblUserName,lblModuleCode,lblUsersType, btnUserProfile, btnBack , logoPlusView );
         bottomView.setMargin(lblUserName, new Insets(10 ,0,0,0));
         bottomView.setAlignment(Pos.BOTTOM_CENTER);
         bottomView.setSpacing(5);
