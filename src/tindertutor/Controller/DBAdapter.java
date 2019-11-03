@@ -20,8 +20,8 @@ public class DBAdapter {
     
     public Boolean sendMessage(String text ,int s_id , int t_id){
         try{
-            DBAdapter dbadapter = new DBAdapter();
-            Connection c = dbadapter.getConnection();
+            
+            Connection c = getConnection();
             PreparedStatement insert = c.prepareStatement("INSERT INTO Messages(Message_Content,Student_ID,Tutor_ID)VALUES('" + text + "' ,'" + s_id + "','" + t_id + "')");
             insert.executeUpdate();
             return true;
